@@ -8,15 +8,28 @@ Syntactical sugar that lets you use perl's built-in array manipulators in a synt
 
 Using built-in perl:
 
-`my @results = map { $_->{c} } sort { $a->{c} cmp $b->{c} } grep { $_->{a} } @array;`
+```perl
+my @results = map { $_->{c} } sort { $a->{c} cmp $b->{c} } grep { $_->{a} } @array;
+```
 
 Using Stream:
 
-`my @results = Stream->new(@array)
-	->grep(sub { $_->{a} })
-	->sort('$a->{c} cmp $b->{c}')
-	->map(sub { $_->{c} })
-	->get();`
+```perl
+my @results = Stream->new(@array)
+    ->grep(sub { $_->{a} })
+    ->sort('$a->{c} cmp $b->{c}')
+    ->map(sub { $_->{c} })
+    ->get();
+```
+Compare it to Java (I need to verify this part still, I think this is a bit wrong):
+
+```java
+List results = new Arrays.stream(array)
+    .filter(a -> a.get("c"))
+    .sorted((a, b) -> String.compare(a.get('c'), b.get('c")))
+    .mapToInt(a -> a.get('c'))
+    .collect();
+```
 
 The advantages here are that it lets the developer read the logic left-to-right instead of backwards
 as built-in perl would have you do. The built-in way is fine for small stuff, but if you need to string
