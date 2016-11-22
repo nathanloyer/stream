@@ -26,7 +26,7 @@ Compare it to Java (I need to verify this part still, I think this is a bit wron
 ```java
 List results = new Arrays.stream(array)
     .filter(a -> a.get("c"))
-    .sorted((a, b) -> String.compare(a.get('c'), b.get('c")))
+    .sorted((a, b) -> String.compare(a.get('c'), b.get('c')))
     .mapToInt(a -> a.get('c'))
     .collect();
 ```
